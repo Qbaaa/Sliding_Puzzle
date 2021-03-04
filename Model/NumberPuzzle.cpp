@@ -11,6 +11,11 @@ NumberPuzzle::NumberPuzzle(int _number, Point<int> *_point): number(_number)
     point = new Point<int>(*_point);
 }
 
+NumberPuzzle::NumberPuzzle(const NumberPuzzle& _numberPuzzle): number(_numberPuzzle.number)
+{
+    point = new Point<int>(*_numberPuzzle.point);
+}
+
 NumberPuzzle::~NumberPuzzle()
 {
     delete point;
@@ -35,4 +40,13 @@ void NumberPuzzle::setPoint(Point<int> *_point)
 {
     delete point;
     point = new Point<int>(*_point);
+}
+
+void NumberPuzzle::toString()
+{
+    cout << "NumberPuzzle { ";
+    cout << "number: " << number;
+    cout << ", point: ";
+    point->toString();
+    cout << " }";
 }
