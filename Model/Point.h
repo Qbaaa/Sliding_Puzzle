@@ -9,6 +9,8 @@ using namespace std;
 * układzie współrzędnych
 *
 * Zadaniem szablonu klasy jest przechowywanie dwóch wartości, które reprezentują współrzędną X i Y
+*
+* @tparam T Dowolny typ całkowity, taki jak int, long, long long lub typ zmiennoprzecinkowy, taki jak float, double lub long double
 */
 template<typename T>
 class Point{

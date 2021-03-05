@@ -20,7 +20,7 @@ private:
 
     /**
     * Pole point przechowuje adres do współrzędnych x i y, który określa miejsce znajdywania się
-    * danego kolcka(pola) na planszy
+    * danego klocka(pola) na planszy
     */
     Point<int> *point;
 

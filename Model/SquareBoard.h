@@ -10,9 +10,8 @@ using namespace std;
 /**
 * Klasa SquareBoard jest przeznaczona do modelowania kwadratowej planszy przechowywującej klasy NumberPuzzle
 *
-* Zadaniem klasy jest przechowywanie rozmiaru kwadratowej planszy,
-* tablicy numerów dla planszy(początkowy stan rozmieszczenia numerów) oraz
-* dwuwymiarową tablicę, która przedstawia kwadratową planszę
+* Zadaniem klasy jest przechowywanie rozmiaru kwadratowej planszy, adresu numeru pola przechowującego numer 0(puste pole)
+* tablicy numerów dla planszy(początkowy stan rozmieszczenia numerów) oraz dwuwymiarowej tablicy, która przedstawia kwadratową planszę
 */
 class SquareBoard{
 
@@ -21,6 +20,11 @@ private:
     * Pole size przechowuje liczbę, która określa rozmiar kwadratowej planszy w grze
     */
     int size;
+
+    /**
+    * Pole zeroNumberPuzzle przechowuje adres do numeru pola, które przechowuje numer 0(puste pole)
+    */
+    NumberPuzzle *zeroNumberPuzzle;
 
     /**
     * Pole startNumbersPuzzle przechowuje tablice numerów dla początkowego stanu gry
@@ -71,6 +75,13 @@ public:
     int getSize() const;
 
     /**
+     * Funkcja udostępnia adres do numeru pola, które przechowuje numer 0(puste pole)
+    *
+    * @return adres pola, które przechowuje numer 0(puste pole)
+    */
+    NumberPuzzle* getZeroNumberPuzzle() const;
+
+    /**
      * Funkcja udostępnia tablicę dwuwymiarową, która reprezentuję planszę kwadratową przechowuje numery pól wraz z współrzednumi
     *
     * @return tablica dwuwymiarowa, reprezentuję planszę kwadratową
@@ -113,9 +124,21 @@ public:
     bool checkSquarePuzzleIsSolvable(vector<int> numbersPuzzleForSquareBoard, int sizeSquareBoard);
 
     /**
+    * Funkcja służy do zamiany miejscami dwóch pól numerów dla planszy kwadratowej
+    *
+    * @param numberPuzzle - adres pola, które ma byż zamienione z pustym polem
+    */
+    void swapNumberPuzzleWithEmptyPuzzle(NumberPuzzle *numberPuzzle);
+
+    /**
     * Funkcja słuzy do wypisania wszystkich atrybutów jakie przechowuje klasa
     */
     void toString();
+
+    /**
+    * Funkcja słuzy do wypisania kwadratowej planszy wraz z rozmieszczonymi polami numerów
+    */
+    void printGameSquareBoard();
 };
 
 #endif // SQUAREBOARD_H

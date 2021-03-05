@@ -17,7 +17,10 @@ SquareBoard::SquareBoard(int _size):size(_size)
     initSquareBoard(_size);
 }
 
-SquareBoard::~SquareBoard() {}
+SquareBoard::~SquareBoard()
+{
+    delete zeroNumberPuzzle;
+}
 
 void SquareBoard::initSquareBoard(int _size)
 {
@@ -34,6 +37,9 @@ void SquareBoard::initSquareBoard(int _size)
     {
         for(int j=0; j < _size; j++)
         {
+            if(*startNumbersPuzzleIterator == 0)
+                zeroNumberPuzzle = new NumberPuzzle(*startNumbersPuzzleIterator, new Point<int>(j + 1, _size - i));;
+
             gameNumbersPuzzle[i].push_back(NumberPuzzle(*startNumbersPuzzleIterator, new Point<int>(j + 1, _size - i)));
             startNumbersPuzzleIterator++;
         }
@@ -43,6 +49,11 @@ void SquareBoard::initSquareBoard(int _size)
 int SquareBoard::getSize() const
 {
     return size;
+}
+
+NumberPuzzle* SquareBoard::getZeroNumberPuzzle() const
+{
+    return zeroNumberPuzzle;
 }
 
 vector<vector<NumberPuzzle>> SquareBoard::getGameNumberPuzzle() const
@@ -152,10 +163,20 @@ bool SquareBoard::checkSquarePuzzleIsSolvable(vector<int> numbersPuzzleForSquare
     return returnValue;
 }
 
+void SquareBoard::swapNumberPuzzleWithEmptyPuzzle(NumberPuzzle *numberPuzzle)
+{
+    gameNumbersPuzzle[size - zeroNumberPuzzle->getPoint()->getY()][zeroNumberPuzzle->getPoint()->getX() - 1].setNumber(numberPuzzle->getNumber());
+    gameNumbersPuzzle[size - numberPuzzle->getPoint()->getY()][numberPuzzle->getPoint()->getX() - 1].setNumber(0);
+    zeroNumberPuzzle->setPoint(new Point<int>(numberPuzzle->getPoint()->getX(), numberPuzzle->getPoint()->getY()));
+}
+
 void SquareBoard::toString()
 {
     cout << "SquareBoard { " << endl;
     cout << "size: " << size << endl;
+    cout << "zeroNumberPuzzle: " << endl;
+    zeroNumberPuzzle->toString();
+    cout << endl;
     cout << "startNumbersPuzzle: [ " << endl;
     for(int elem : startNumbersPuzzle)
         cout << elem << " ";
@@ -173,5 +194,32 @@ void SquareBoard::toString()
         cout << "]" << endl;
     }
     cout << "] ";
-    cout << "} ";
+    cout << "} " << endl;
 }
+
+ void SquareBoard::printGameSquareBoard()
+ {
+
+     for(int i=0; i < size; i++)
+     {
+         cout << "-";
+         for(int k = 0 ; k < size; k++)
+            cout << "-----";
+         cout << endl;
+
+         for(int j=0; j < size; j++)
+         {
+             cout << "| ";
+             cout.width(2);
+             if(gameNumbersPuzzle[i][j].getNumber() != 0)
+                cout << gameNumbersPuzzle[i][j].getNumber() << " ";
+             else
+                 cout << "   ";
+         }
+         cout << "|" << endl;
+     }
+
+     for(int k = 0 ; k < size; k++)
+        cout << "-----";
+     cout << "-" << endl;
+ }
