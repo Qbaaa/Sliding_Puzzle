@@ -63,6 +63,23 @@ public:
     SquareBoard(int _size);
 
     /**
+    * Konstruktor argumentowy, który tworzy kwadratową plansze. Ustawia atrybuty klasy podaną wartością
+    *
+    * Konstruktor tworzy kwadratową planszę z podanymi polami pól
+    *
+    * @param _startBoard - tablica pól dla początkowego stanu gry
+    * @param _gameBoard - tablica pól dla planszy, dla której jest rozgrywana rozgrywka
+    */
+    SquareBoard(vector<int> _startBoard, vector<int> _gameBoard);
+
+    /**
+    * Konstruktor kopiujący, który służy do stworzenia nowej planszy poprzez skopiowanie atrybutów od innego obiektu planszy
+    *
+    * @param copySquareBoard - wartość innej planszy, który ma zostać skopiowany
+    */
+    SquareBoard(const SquareBoard& copySquareBoard);
+
+    /**
     * Destruktor służy do zwolnienia pamięci danego obiektu
     */
     ~SquareBoard();

@@ -4,6 +4,7 @@
 
 #include <stdlib.h>
 #include <time.h>
+#include <cmath>
 #include <algorithm>
 #include <iostream>
 
@@ -15,6 +16,38 @@ SquareBoard::SquareBoard():size(2)
 SquareBoard::SquareBoard(int _size):size(_size)
 {
     initSquareBoard(_size);
+}
+
+SquareBoard::SquareBoard(vector<int> _startBoard, vector<int> _gameBoard)
+{
+    size = sqrt((double)_startBoard.size());
+
+    for(int i=0; i < size; i++)
+        gameNumbersPuzzle.push_back(vector<NumberPuzzle>());
+
+    startNumbersPuzzle = vector<int>(_startBoard);
+
+    vector<int>::iterator gameNumbersPuzzleIterator = _gameBoard.begin();
+
+    for(int i=0; i < size; i++)
+    {
+        for(int j=0; j < size; j++)
+        {
+            if(*gameNumbersPuzzleIterator == 0)
+                zeroNumberPuzzle = new NumberPuzzle(*gameNumbersPuzzleIterator, new Point<int>(j + 1, size - i));;
+
+            gameNumbersPuzzle[i].push_back(NumberPuzzle(*gameNumbersPuzzleIterator, new Point<int>(j + 1, size - i)));
+            gameNumbersPuzzleIterator++;
+        }
+    }
+}
+
+SquareBoard::SquareBoard(const SquareBoard& copySquareBoard)
+{
+    size = copySquareBoard.size;
+    zeroNumberPuzzle = new NumberPuzzle(*copySquareBoard.zeroNumberPuzzle);
+    startNumbersPuzzle = vector<int>(copySquareBoard.startNumbersPuzzle);
+    gameNumbersPuzzle = vector<vector<NumberPuzzle>>(copySquareBoard.gameNumbersPuzzle);
 }
 
 SquareBoard::~SquareBoard()

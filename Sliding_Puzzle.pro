@@ -13,6 +13,7 @@ TEMPLATE =app
 
 SOURCES += \
     Model/ComputerAI.cpp \
+    Model/File.cpp \
     Model/Game.cpp \
     Model/NumberPuzzle.cpp \
     Model/Person.cpp \
@@ -23,6 +24,7 @@ SOURCES += \
 
 HEADERS += \
     Model/ComputerAI.h \
+    Model/File.h \
     Model/Game.h \
     Model/NumberPuzzle.h \
     Model/Person.h \

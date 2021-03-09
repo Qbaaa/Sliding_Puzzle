@@ -4,6 +4,9 @@
 #include "Model/Point.h"
 
 #include <iostream>
+#include <time.h>
+#include <fstream>
+#include <string.h>
 
 Game::Game(int sizeSquareBoard, string playerType)
 {
@@ -11,6 +14,22 @@ Game::Game(int sizeSquareBoard, string playerType)
 
     if(playerType.compare("person") == 0)
         player = new Person();
+}
+
+Game::Game(SquareBoard _squareBoard, string _playerType, int _moves)
+{
+    squareBoard = new SquareBoard(_squareBoard);
+
+    if(_playerType.compare("person") == 0)
+        player = new Person(_moves);
+}
+
+Game::Game(const Game& game)
+{
+    squareBoard = new SquareBoard(*game.squareBoard);
+
+    if (typeid(*game.player) == typeid(Person))
+        player = new Person(game.player->getMoves());
 }
 
 Game::~Game()

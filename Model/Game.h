@@ -32,11 +32,29 @@ public:
     * Konstruktor argumentowy, który tworzy rozgrywkę gry . Ustawia atrybuty klasy podanymi wartościami
     *
     * @param sizeSquareBoard - rozmiar kwadratowej planszy
-    * @param player - gracz, który ma grać w daną gre
-    *                 ( "person"    - osoba, która będzie wykonywać ręczne ruchu,
+    * @param playerType - gracz, który ma grać w daną gre
+    *                  ("person"    - osoba, która będzie wykonywać ręczne ruchu,
     *                   "computerAI - sztuczna inteligencja, która będzie wykonywać auqtomatyczne ruchu)
     */
-    Game(int sizeSquareBoard, string player);
+    Game(int sizeSquareBoard, string playerType);
+
+    /**
+    * Konstruktor argumentowy, który tworzy rozgrywkę gry . Ustawia atrybuty klasy podanymi wartościami
+    *
+    * @param _squareBoard - obiek planszy kwadratowej
+    * @param _playerType -  gracz, który ma grać w daną gre
+    *                      ("person"    - osoba, która będzie wykonywać ręczne ruchu,
+    *                       "computerAI - sztuczna inteligencja, która będzie wykonywać auqtomatyczne ruchu)
+    * @param _moves - ilośc punktów posiadanych przez gracza
+    */
+    Game(SquareBoard _squareBoard, string _playerType, int _moves);
+
+    /**
+    * Konstruktor kopiujący, który służy do stworzenia nowej gry poprzez skopiowanie atrybutów od innego obiektu gry
+    *
+    * @param game - wartość innej rozgrywki gry, który ma zostać skopiowany
+    */
+    Game(const Game& game);
 
     /**
     * Destruktor służy do zwolnienia pamięci danego obiektu
@@ -93,16 +111,6 @@ public:
     *        false - kwadratowa plansza z numerami pól NIE jest ułożona w końcowym stanie
     */
     bool checkIsGameEnd();
-
-    /**
-    * Funkcja służy do zapisania gry przez użytkownika
-    */
-    void save();
-
-    /**
-    * Funkcja służy do wczytania zapisanej gry przez użytkownika
-    */
-    void load();
 };
 
 #endif // GAME_H

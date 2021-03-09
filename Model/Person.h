@@ -4,7 +4,7 @@
 #include "Player.h"
 
 /**
-* Klasa Person jest przeznaczona do modelowania osoby, która ręcznie będie grała w grę
+* Klasa Person jest przeznaczona do modelowania osoby, która ręcznie będzie wybierał ruch, który chce wykonać
 */
 class Person: public Player {
 
