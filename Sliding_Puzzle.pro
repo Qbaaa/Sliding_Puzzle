@@ -15,6 +15,7 @@ SOURCES += \
     Model/ComputerAI.cpp \
     Model/File.cpp \
     Model/Game.cpp \
+    Model/NodeBoard.cpp \
     Model/NumberPuzzle.cpp \
     Model/Person.cpp \
     Model/Player.cpp \
@@ -26,6 +27,7 @@ HEADERS += \
     Model/ComputerAI.h \
     Model/File.h \
     Model/Game.h \
+    Model/NodeBoard.h \
     Model/NumberPuzzle.h \
     Model/Person.h \
     Model/Player.h \

@@ -51,7 +51,7 @@ public:
     ~NumberPuzzle();
 
     /**
-     * Funkcja udostępnia numer przechowywanego klocka (pola)
+    * Funkcja udostępnia numer przechowywanego klocka (pola)
     *
     * @return zwraca numer danego klocka (pola), przechowywanego w danej klasie
     */
@@ -82,7 +82,6 @@ public:
     * Funkcja słuzy do wypisania wszystkich atrybutów jakie przechowuje klasa
     */
     void toString();
-
 };
 
 #endif // NUMBERPUZZLE_H

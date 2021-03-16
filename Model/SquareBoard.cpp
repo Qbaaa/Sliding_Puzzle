@@ -256,3 +256,13 @@ void SquareBoard::toString()
         cout << "-----";
      cout << "-" << endl;
  }
+
+bool SquareBoard::operator==(const SquareBoard& ele)
+{
+    for(unsigned int i=0; i < gameNumbersPuzzle.size(); i++)
+        for(unsigned int j=0; j < gameNumbersPuzzle.size(); j++)
+            if(gameNumbersPuzzle[i][j].getNumber() != ele.gameNumbersPuzzle[i][j].getNumber())
+                return false;
+
+    return true;
+}

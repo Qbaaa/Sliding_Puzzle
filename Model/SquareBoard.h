@@ -156,6 +156,18 @@ public:
     * Funkcja słuzy do wypisania kwadratowej planszy wraz z rozmieszczonymi polami numerów
     */
     void printGameSquareBoard();
+
+    /**
+    * Funkcja słuzy do przeciążenia operatora '==' dla danej klasy
+    *
+    * Funkcja porównuje pola gameNumbersPuzzle z klas
+    *
+    * @param ele - adres obiektu, który ma być porównywany
+    *
+    * @return  true - dane pola obiektu danej klasy z podaym adresem obiektu jest równy sobie,
+    *          false - dane pola obiektu danej klasy z podaym adresem obiektu NIE jest równy sobie
+    */
+    bool operator==(const SquareBoard& ele);
 };
 
 #endif // SQUAREBOARD_H
