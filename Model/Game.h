@@ -36,7 +36,7 @@ public:
     *                  ("person"    - osoba, która będzie wykonywać ręczne ruchu,
     *                   "computerAI - sztuczna inteligencja, która będzie wykonywać auqtomatyczne ruchu)
     */
-    Game(int sizeSquareBoard, string playerType);
+    Game(int sizeSquareBoard, string playerType, string _nameAlgorithm = "A*");
 
     /**
     * Konstruktor argumentowy, który tworzy rozgrywkę gry . Ustawia atrybuty klasy podanymi wartościami

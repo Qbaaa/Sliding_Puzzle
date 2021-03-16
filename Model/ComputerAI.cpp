@@ -80,6 +80,14 @@ void ComputerAI::algorithmAStar(SquareBoard *board)
     cout << "END Board" << endl;
     cout << "Move: " << current->getNameMove() <<  "Number: " << current->getMove()->getNumber() << endl;
     current->getBoard()->printGameSquareBoard();
+
+    while(current->getMove()->getNumber() != -1)
+    {
+        listMoveNumbers.push_front(*current->getMove());
+        current = current->getPrev();
+    }
+
+    iteratorMoveNumber = listMoveNumbers.begin();
     delete root;
 }
 
@@ -140,7 +148,16 @@ void ComputerAI::setNameAlgorithm(string _nameAlgorithm, SquareBoard _board)
 }
 
 NumberPuzzle* ComputerAI::move(vector<vector<NumberPuzzle>> gameSquareBoard)
-{}
+{
+    list<NumberPuzzle>::iterator prevIterator = iteratorMoveNumber;
+    cout << "Move number: " << prevIterator->getNumber() << endl;
+    iteratorMoveNumber++;
+
+    return &*prevIterator;
+}
 
 void ComputerAI::toString()
-{}
+{
+    cout << "MOVES: " << moves << endl;
+    cout << "Name Algorithm: " << nameAlgorithm << endl;
+}

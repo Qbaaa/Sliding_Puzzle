@@ -8,12 +8,14 @@
 #include <fstream>
 #include <string.h>
 
-Game::Game(int sizeSquareBoard, string playerType)
+Game::Game(int sizeSquareBoard, string playerType, string _nameAlgorithm)
 {
     squareBoard = new SquareBoard(sizeSquareBoard);
 
     if(playerType.compare("person") == 0)
         player = new Person();
+    else if(playerType.compare("computerAI") == 0)
+        player = new ComputerAI(_nameAlgorithm, *squareBoard);
 }
 
 Game::Game(SquareBoard _squareBoard, string _playerType, int _moves)
@@ -48,6 +50,18 @@ Player* Game::getPlayer() const
     return player;
 }
 
+void Game::setSquareBoard(SquareBoard* _squareBoard)
+{
+    delete squareBoard;
+    squareBoard = _squareBoard;
+}
+
+void Game::setPlayer(Player* _player)
+{
+    delete player;
+    player = _player;
+}
+
 void Game::playGame()
 {
     bool finishGameIs = false;
@@ -57,13 +71,21 @@ void Game::playGame()
     {
         player->toString();
         squareBoard->printGameSquareBoard();
-        bool correctMove;
-        do{
+
+        if (typeid(*player) == typeid(Person))
+        {
+            bool correctMove;
+            do{
+                moveNumberPuzzle = new NumberPuzzle(*player->move(squareBoard->getGameNumberPuzzle()));
+                correctMove = checkCorrectMove(*moveNumberPuzzle);
+                if(!correctMove)
+                    cout << "Przesuniecie puzzla z numerem "<< moveNumberPuzzle->getNumber() << " jest niemozliwe" << endl;
+            }while(!correctMove);
+        }
+        else if(typeid(*player) == typeid(ComputerAI))
+        {
             moveNumberPuzzle = new NumberPuzzle(*player->move(squareBoard->getGameNumberPuzzle()));
-            correctMove = checkCorrectMove(*moveNumberPuzzle);
-            if(!correctMove)
-                cout << "Przesuniecie puzzla z numerem "<< moveNumberPuzzle->getNumber() << " jest niemozliwe" << endl;
-        }while(!correctMove);
+        }
 
         squareBoard->swapNumberPuzzleWithEmptyPuzzle(moveNumberPuzzle);
         player->increaseOneMoves();
