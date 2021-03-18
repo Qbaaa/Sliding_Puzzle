@@ -1,7 +1,7 @@
 #include "Model/NodeBoard.h"
 #include "Model/NumberPuzzle.h"
 
-NodeBoard::NodeBoard(): gScore(0), hScore(0), fScore(0)
+NodeBoard::NodeBoard(): visited(false), gScore(0), hScore(0), fScore(0)
 {
     move = nullptr;
     nameMove = "START";
@@ -13,7 +13,8 @@ NodeBoard::NodeBoard(): gScore(0), hScore(0), fScore(0)
     prev = nullptr;
 }
 
-NodeBoard::NodeBoard(string _nameMove, NumberPuzzle *_moveNumber, SquareBoard *_board,  int _gScore, int _hScore, int _fScore): gScore(_gScore), hScore(_hScore), fScore(_fScore)
+NodeBoard::NodeBoard(string _nameMove, NumberPuzzle *_moveNumber, SquareBoard *_board,  int _gScore, int _hScore, int _fScore):
+    visited(false) ,gScore(_gScore), hScore(_hScore), fScore(_fScore)
 {
     move = new NumberPuzzle(*_moveNumber);
     nameMove = _nameMove;
@@ -57,6 +58,11 @@ void NodeBoard::addNext(string _nameMove, NumberPuzzle *_moveNumber, SquareBoard
         nextRIGHT = new NodeBoard(_nameMove, _moveNumber, _board, _gScore, _hScore, _fScore);
         nextRIGHT->prev = this;
     }
+}
+
+bool NodeBoard::getVisited() const
+{
+    return visited;
 }
 
 string NodeBoard::getNameMove() const
@@ -104,6 +110,11 @@ NodeBoard* NodeBoard::getNext(string _move) const
 NodeBoard* NodeBoard::getPrev() const
 {
     return prev;
+}
+
+void NodeBoard::setVisited(bool _visited)
+{
+    visited = _visited;
 }
 
 bool NodeBoard::operator ()( const NodeBoard* _node1, const NodeBoard* _node2 )

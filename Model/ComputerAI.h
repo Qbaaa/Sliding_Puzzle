@@ -3,6 +3,7 @@
 
 #include "Model/Player.h"
 #include "Model/SquareBoard.h"
+#include "Model/NodeBoard.h"
 
 #include <map>
 
@@ -54,6 +55,30 @@ public:
     * @param _board - kwadratowa plansza z ponumerowanymi numerami
     */
     void algorithmAStar(SquareBoard *_board);
+
+    /**
+    * Funkcja służy do wyszukania rozwiązania algorytmem Iterative deepening A* dla podanej kwadratowej planszy
+    *
+    * @param _board - kwadratowa plansza z ponumerowanymi numerami
+    */
+    void algorithmIDAStar(SquareBoard *board);
+
+    /**
+    * Funkcja służy do wyszukania rozwiązania algorytmem Iterative deepening A* dla podanej kwadratowej planszy,
+    *
+    *
+    * @param _currentFScore - obecna funkcja kosztu
+    *
+    * @param _nextFScore - następna funkcja kosztu
+    *
+    * @param node - wierzchołek, od którego ma zacząć sie szukanie
+    *
+    * @param _closeList - lista plansz, które są juz odwiedzone
+    *
+    * @return NULL - jeśli nie nzaleziono końcowego wierzchołka rozwiązania
+    *         obiekt - znaleziono końcowy wierzchołek rozwiązania
+    */
+    NodeBoard* iterativeDeepedingAStar(int *_currentFScore, int *_nextFScore, NodeBoard *node, list< SquareBoard > *_closeList);
 
     /**
     * Funkcja służy do obliczenia, jakie ruchy można wykonać dla podanej kwadratowej planszy

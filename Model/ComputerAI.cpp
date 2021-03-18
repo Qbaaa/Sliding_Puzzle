@@ -3,6 +3,7 @@
 #include "Model/NodeBoard.h"
 #include <queue>
 #include <algorithm>
+#include <thread>
 
 ComputerAI::ComputerAI(string _nameAlgorithm, SquareBoard _board )
 {
@@ -23,6 +24,11 @@ ComputerAI::ComputerAI(string _nameAlgorithm, SquareBoard _board )
     {
         nameAlgorithm = _nameAlgorithm;
         algorithmAStar(&_board);
+    }
+    else if( _nameAlgorithm.compare("IDA*") == 0 )
+    {
+        nameAlgorithm = _nameAlgorithm;
+        algorithmIDAStar(&_board);
     }
 }
 
@@ -91,6 +97,138 @@ void ComputerAI::algorithmAStar(SquareBoard *board)
     delete root;
 }
 
+void ComputerAI::algorithmIDAStar(SquareBoard *board)
+{
+    int currentFScore = 0;
+    int nextFScore;
+    int gScore = 0;
+    int hScore = manhattanDistance(board->getGameNumberPuzzle());
+    nextFScore = gScore + hScore;
+    NodeBoard *root = new NodeBoard("START", new NumberPuzzle(-1, new Point<int>(-1, -1)), board, gScore, hScore, nextFScore);
+    NodeBoard *gameEnd = nullptr;
+    list< SquareBoard > closeList;
+    closeList.push_back(*root->getBoard());
+    currentFScore = nextFScore;
+    nextFScore = -1;
+
+    cout << "START: " << endl;
+    cout << "fScore = gScore + hScore -> " << root->getFScore()<< " = " << root->getGScore() << " + " << hScore << endl;
+    board->printGameSquareBoard();
+
+    while(gameEnd == nullptr )
+    {
+        gameEnd = iterativeDeepedingAStar(&currentFScore, &nextFScore, root, &closeList);
+        currentFScore = nextFScore;
+        nextFScore = -1;
+    }
+    cout << "END: " << endl;
+    cout << "fScore = gScore + hScore -> " << gameEnd->getFScore()<< " = " << gameEnd->getGScore() << " + " << gameEnd->getHScore() << endl;
+    gameEnd->getBoard()->printGameSquareBoard();
+    while(gameEnd->getMove()->getNumber() != -1)
+    {
+        listMoveNumbers.push_front(*gameEnd->getMove());
+        gameEnd = gameEnd->getPrev();
+    }
+
+    iteratorMoveNumber = listMoveNumbers.begin();
+    delete root;
+}
+
+NodeBoard* ComputerAI::iterativeDeepedingAStar(int *_currentFScore, int *_nextFScore, NodeBoard *node, list< SquareBoard > *_closeList)
+{
+    if(node->getVisited() == false)
+    {
+        cout<<"----------------------" <<endl;
+        map<string, NumberPuzzle> possibleNextNumberMove = map<string, NumberPuzzle>(possibleMove(node->getBoard()));
+
+        for( map<string, NumberPuzzle>::iterator it = possibleNextNumberMove.begin(); it != possibleNextNumberMove.end(); it++ )
+        {
+             SquareBoard boardNextPossibleMove(*node->getBoard());
+             boardNextPossibleMove.swapNumberPuzzleWithEmptyPuzzle(&it->second);
+
+             if( find(_closeList->begin(), _closeList->end(), boardNextPossibleMove) == end(*_closeList) )
+             {
+                 int hScore = manhattanDistance(boardNextPossibleMove.getGameNumberPuzzle());
+                 cout << "Move: " << it->first << " Number: " << it->second.getNumber() << endl;
+                 cout << "fScore = gScore + hScore -> " << node->getGScore() + hScore + 1 << " = " << node->getGScore() + 1 << " + " << hScore << endl;
+                 boardNextPossibleMove.printGameSquareBoard();
+
+                 node->addNext(it->first, &it->second, &boardNextPossibleMove, node->getGScore() + 1, hScore, node->getGScore() + hScore + 1);
+                 _closeList->push_back(boardNextPossibleMove);
+                 if(hScore == 0)
+                 {
+                    return node->getNext(it->first);
+                 }
+             }
+         }
+        cout<<"-----------END---------" <<endl;
+        node->setVisited(true);
+    }
+
+    NodeBoard *returnValue = nullptr;
+
+        if(node->getNext("UP") != nullptr)
+        {
+            if(*_currentFScore >= node->getNext("UP")->getFScore())
+            {
+                returnValue = iterativeDeepedingAStar(_currentFScore, _nextFScore, node->getNext("UP"), _closeList );
+                if( returnValue != nullptr )
+                    return returnValue;
+            }
+            else
+            {
+                if(*_nextFScore == -1 || *_nextFScore > node->getNext("UP")->getFScore())
+                    *_nextFScore = node->getNext("UP")->getFScore();
+            }
+        }
+
+        if(node->getNext("DOWN") != nullptr)
+        {
+            if(*_currentFScore >= node->getNext("DOWN")->getFScore())
+            {
+                returnValue = iterativeDeepedingAStar(_currentFScore, _nextFScore, node->getNext("DOWN"), _closeList );
+                if( returnValue != nullptr )
+                    return returnValue;
+            }
+            else
+            {
+                if(*_nextFScore == -1 || *_nextFScore > node->getNext("DOWN")->getFScore())
+                    *_nextFScore = node->getNext("DOWN")->getFScore();
+            }
+        }
+
+        if(node->getNext("LEFT") != nullptr)
+        {
+            if(*_currentFScore >= node->getNext("LEFT")->getFScore())
+            {
+                returnValue =  iterativeDeepedingAStar(_currentFScore, _nextFScore, node->getNext("LEFT"), _closeList );
+                if( returnValue != nullptr )
+                    return returnValue;
+            }
+            else
+            {
+                if(*_nextFScore == -1 || *_nextFScore > node->getNext("LEFT")->getFScore())
+                    *_nextFScore = node->getNext("LEFT")->getFScore();
+            }
+        }
+
+        if(node->getNext("RIGHT") != nullptr)
+        {
+            if(*_currentFScore >= node->getNext("RIGHT")->getFScore())
+            {
+                returnValue = iterativeDeepedingAStar(_currentFScore, _nextFScore, node->getNext("RIGHT"), _closeList );
+                if( returnValue != nullptr )
+                    return returnValue;
+            }
+            else
+            {
+                if(*_nextFScore == -1 || *_nextFScore > node->getNext("RIGHT")->getFScore())
+                    *_nextFScore = node->getNext("RIGHT")->getFScore();
+            }
+        }
+        return nullptr;
+}
+
 map<string, NumberPuzzle> ComputerAI::possibleMove(SquareBoard *board)
 {
     map<string, NumberPuzzle> possibleMove;
@@ -144,6 +282,11 @@ void ComputerAI::setNameAlgorithm(string _nameAlgorithm, SquareBoard _board)
     {
         nameAlgorithm = _nameAlgorithm;
         algorithmAStar(&_board);
+    }
+    else if( _nameAlgorithm.compare("IDA*") == 0 )
+    {
+        nameAlgorithm = _nameAlgorithm;
+        algorithmIDAStar(&_board);
     }
 }
 

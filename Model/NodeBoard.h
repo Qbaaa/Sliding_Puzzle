@@ -11,6 +11,12 @@
 class NodeBoard
 {
 private:
+
+    /**
+    * Pole visited służy do informowania, czy wierzchołek został już odwiedzony w drzewie czy nie
+    */
+    bool visited;
+
     /**
     * Pole nameMove przechowuje nazwę przesunięcia pola (UP, DOWN, LEFT, RIGHT)
     */
@@ -112,6 +118,14 @@ public:
     void addNext(string _nameMove, NumberPuzzle *_moveNumber, SquareBoard *_board, int _gScore, int _hScore, int _fScore);
 
     /**
+    * Funkcja udostępnia informacje czy wierzchołek został już odwiedzony w drzewie czy nie
+    *
+    * @return true - wierzcholek odwiedzony,
+    *          false - wierzchołek nie odwiedzony
+    */
+    bool getVisited() const;
+
+    /**
     * Funkcja udostępnia nazwę przesunięcia pola (UP, DOWN, LEFT, RIGHT)
     *
     * @return nazwa przesunięcia pola
@@ -168,6 +182,14 @@ public:
     * @return adres do poprzedniego węzła
     */
     NodeBoard* getPrev() const;
+
+    /**
+    * Funkcja słuzy do zmiany stanu odwiedzenia wierzchołak
+    *
+    * @param true - wierzcholek odwiedzony,
+    *        false - wierzchołek nie odwiedzony
+    */
+    void setVisited(bool _visited);
 
     /**
     * Funkcja słuzy do przeciążenia operatora '()' dla danej klasy
