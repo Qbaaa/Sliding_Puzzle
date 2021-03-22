@@ -20,7 +20,10 @@ SOURCES += \
     Model/Person.cpp \
     Model/Player.cpp \
     Model/SquareBoard.cpp \
-    View/mainwindow.cpp \
+    View/GUI.cpp \
+    View/GamePage.cpp \
+    View/MainPage.cpp \
+    View/SelectPage.cpp \
     main.cpp \
 
 HEADERS += \
@@ -33,7 +36,10 @@ HEADERS += \
     Model/Player.h \
     Model/Point.h \
     Model/SquareBoard.h \
-    View/mainwindow.h \
+    View/GUI.h \
+    View/GamePage.h \
+    View/MainPage.h \
+    View/SelectPage.h \
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
