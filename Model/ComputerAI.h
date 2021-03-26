@@ -116,7 +116,14 @@ public:
     *
     * @return obiekt pola wybranego przez komputer, którym chce się poruszyć
     */
-    NumberPuzzle* move(vector<vector<NumberPuzzle>> _gameSquareBoard);
+    NumberPuzzle* move(vector<vector<NumberPuzzle>> _gameSquareBoard, int _moveNumberPuzzle);
+
+    /**
+    * Funkcja służy do wykonania automatycznego ruchu wstecz przez komputer
+    *
+    * @return obiekt pola wybranego przez komputer, którym chce się poruszyć
+    */
+    NumberPuzzle* movePrevious();
 
     /**
     * Funkcja słuzy do wypisania wszystkich atrybutów jakie przechowuje klasa

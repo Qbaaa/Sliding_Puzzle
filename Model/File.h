@@ -17,7 +17,7 @@ public:
     * @return true - zapysanie stanu gry powiodło się,
     *        false - zapisanie stanu gry NIE powiodło się
     */
-    bool save(Game game);
+    bool save(Game *game);
 
     /**
     * Funkcja służy do wczytania stanu zapisanej gry przez użytkownika

@@ -2,8 +2,7 @@
 
 #include <QPainter>
 
-
-GamePage::GamePage(QWidget *parent, int _size, QString _typePlayer): QWidget(parent)
+GamePage::GamePage(QWidget *parent, int _size, vector<int> listNumbers, QString _typePlayer): QWidget(parent)
 {
     typePlayer = _typePlayer;
     size = _size;
@@ -11,7 +10,7 @@ GamePage::GamePage(QWidget *parent, int _size, QString _typePlayer): QWidget(par
     setMinimumSize(600, 600);
     setMaximumSize(600, 600);
     mapper = new QSignalMapper( this );
-    int number =0;
+    int index =0;
 
     game = new QPushButton** [_size];
 
@@ -20,10 +19,12 @@ GamePage::GamePage(QWidget *parent, int _size, QString _typePlayer): QWidget(par
         game[i] = new QPushButton* [_size];
         for (int j=0; j < _size; j++)
         {
-            if(number != 0)
+            if(listNumbers[index] != 0)
             {
-                game[i][j] = new QPushButton(QString::number(number), this);
-                game[i][j]->setGeometry(geometry().width() / 2 - ((_size * 50 + _size * 5)/ 2) + (j * 50)+ j * 5, geometry().height() / 2 - ((_size * 50 + _size * 5)/ 2)+(i * 50) + i * 5, 50, 50);
+                game[i][j] = new QPushButton(QString::number(listNumbers[index]), this);
+                game[i][j]->setGeometry(geometry().width() / 2 - ((_size * 50 + _size * 5)/ 2) + (j * 50)+ j * 5,
+                                        geometry().height() / 2 - ((_size * 50 + _size * 5)/ 2)+(i * 50) + i * 5,
+                                        50, 50);
 
                 QPalette pal= game[i][j]->palette();
                 pal.setColor(QPalette::ButtonText, QColor(Qt::white));
@@ -35,21 +36,21 @@ GamePage::GamePage(QWidget *parent, int _size, QString _typePlayer): QWidget(par
 
 
                 connect(game[i][j], SIGNAL(clicked()), mapper, SLOT(map()));
-                mapper->setMapping(game[i][j], QString::number(number));
+                mapper->setMapping(game[i][j], QString::number(listNumbers[index]));
             }
             else
             {
                 game[i][j] = new QPushButton();
-                game[i][j]->setGeometry(geometry().width() / 2 - ((_size * 50 + _size * 5)/ 2)+(j * 50) + j * 5, geometry().height() / 2 - ((_size * 50 + _size * 5)/ 2)+(i * 50) + i * 5, 50, 50);
+                game[i][j]->setGeometry(geometry().width() / 2 - ((_size * 50 + _size * 5)/ 2)+(j * 50) + j * 5,
+                                        geometry().height() / 2 - ((_size * 50 + _size * 5)/ 2)+(i * 50) + i * 5,
+                                        50, 50);
 
                 connect(game[i][j], SIGNAL(clicked()), mapper, SLOT(map()));
-                mapper->setMapping(game[i][j],QString::number(number));
+                mapper->setMapping(game[i][j],QString::number(listNumbers[index]));
             }
-            number++;
+            index++;
         }
     }
- //   connect(mapper, SIGNAL(mappedString(QString)), this, SLOT(handleButton(QString)));
-
     titleMoves = new QLabel("Moves:", this);
     titleMoves->setGeometry(game[0][0]->x(),  game[0][0]->y() - 50, 70, 30);
     titleMoves->setFont(QFont("Times", 14, QFont::Bold));
@@ -92,10 +93,41 @@ GamePage::~GamePage()
     delete titleMoves;
     delete action1;
     delete action2;
+    delete mapper;
+}
+
+QPushButton*** GamePage::getGameBoard() const
+{
+    return game;
+}
+
+QSignalMapper* GamePage::getSignalMapper() const
+{
+    return mapper;
+}
+
+QPushButton* GamePage::getAction1() const
+{
+    return action1;
+}
+
+QPushButton* GamePage::getAction2() const
+{
+    return action2;
+}
+
+QLCDNumber* GamePage::getLCDNumber() const
+{
+    return lcdNumber;
+}
+
+QString GamePage::getTypePlayer() const
+{
+    return typePlayer;
 }
 
 void GamePage::paintEvent(QPaintEvent *e)
-{
+{   
     QPainter painter = QPainter(this);
 
     for (int i=0; i < size ; i++)

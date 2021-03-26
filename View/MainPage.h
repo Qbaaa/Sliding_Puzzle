@@ -7,6 +7,12 @@
 #include <QPushButton>
 #include <QWidget>
 
+/**
+* Klasa MainPage jest przeznaczona do modelowania graficznego interfejsu użytkownika w Qt
+*
+* Zadaniem klasy jest stworzenie widoku graficznego dla menu głównego układanki
+* (przyciski: nowa gra, wczytaj grę, wyjdz z gry)
+*/
 class MainPage: public QWidget
 {
 private:
@@ -18,6 +24,10 @@ private:
 public:
     MainPage(QWidget *parent =nullptr);
     ~MainPage();
+
+   QPushButton* getBNewGame() const;
+   QPushButton* getBLoad() const;
+   QPushButton* getBExit() const;
 };
 
 #endif // MAINPAGE_H

@@ -27,3 +27,17 @@ MainPage::~MainPage()
     delete bLoad;
     delete bExit;
 }
+
+QPushButton* MainPage::getBNewGame() const
+{
+    return bNewGame;
+}
+QPushButton* MainPage::getBLoad() const
+{
+    return bLoad;
+}
+
+QPushButton* MainPage::getBExit() const
+{
+    return bExit;
+}

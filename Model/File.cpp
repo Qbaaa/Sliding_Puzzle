@@ -6,7 +6,7 @@
 #include <fstream>
 #include <iostream>
 
-bool File::save(Game game)
+bool File::save(Game *game)
 {
     string fileName;
     char dateTime[30];
@@ -15,12 +15,12 @@ bool File::save(Game game)
     struct tm *timeInfo;
 
     fileName.append("Puzzle");
-    fileName.append(to_string(game.getSquareBoard()->getSize() * game.getSquareBoard()->getSize()));
+    fileName.append(to_string(game->getSquareBoard()->getSize() * game->getSquareBoard()->getSize()));
     time(&timeN);
     timeInfo = localtime(&timeN);
     strftime(dateTime, sizeof(dateTime), "_%d_%m_%Y_%H%M%S.dat", timeInfo);
     fileName.append(dateTime);
-    cout <<fileName<<endl;
+//    cout <<fileName<<endl;
     ofstream file;
     file.open(fileName, ios::out|ios::trunc);
 
@@ -30,16 +30,16 @@ bool File::save(Game game)
     }
     else
     {
-        file << "P " << game.getSquareBoard()->getSize() << " " << game.getSquareBoard()->getSize() * game.getSquareBoard()->getSize() <<endl;
-        file << "u " << game.getPlayer()->getMoves() << endl;
+        file << "P " << game->getSquareBoard()->getSize() << " " << game->getSquareBoard()->getSize() * game->getSquareBoard()->getSize() <<endl;
+        file << "u " << game->getPlayer()->getMoves() << endl;
 
-        for(int i=0; i < game.getSquareBoard()->getSize() * game.getSquareBoard()->getSize(); i++)
-            file << game.getSquareBoard()->getStartNumberPuzzle()[i] << " ";
+        for(int i=0; i < game->getSquareBoard()->getSize() * game->getSquareBoard()->getSize(); i++)
+            file << game->getSquareBoard()->getStartNumberPuzzle()[i] << " ";
         file << endl;
 
-        for(int i=0; i < game.getSquareBoard()->getSize(); i++)
-            for(int j=0; j < game.getSquareBoard()->getSize(); j++)
-                   file << game.getSquareBoard()->getGameNumberPuzzle()[i][j].getNumber() << " ";
+        for(int i=0; i < game->getSquareBoard()->getSize(); i++)
+            for(int j=0; j < game->getSquareBoard()->getSize(); j++)
+                   file << game->getSquareBoard()->getGameNumberPuzzle()[i][j].getNumber() << " ";
         file << endl;
         returnCorrectFile = true;
     }

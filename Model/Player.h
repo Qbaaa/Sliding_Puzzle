@@ -65,7 +65,7 @@ public:
     *
     * @return obiekt pola wybranego przez gracza, którym chce się poruszyć
     */
-    virtual NumberPuzzle* move(vector<vector<NumberPuzzle>> gameSquareBoard) = 0;
+    virtual NumberPuzzle* move(vector<vector<NumberPuzzle>> gameSquareBoard, int moveNumberPuzzle) = 0;
 
     /**
     * Funkcja słuzy do wypisania wszystkich atrybutów jakie przechowuje klasa

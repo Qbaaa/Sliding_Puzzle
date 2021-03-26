@@ -47,6 +47,8 @@ SelectPage::SelectPage(QWidget *parent): QWidget(parent)
     bStart = new QPushButton("Start", this);
     bStart->setGeometry(200, 330, 200, 50);
 
+    bMainPage = new QPushButton("Powrót", this);
+    bMainPage->setGeometry(200, 420, 200, 50);
 }
 
 SelectPage::~SelectPage()
@@ -59,4 +61,30 @@ SelectPage::~SelectPage()
     delete selectTypeAlgorithm;
     delete selectTypeSize;
     delete bStart;
+    delete bMainPage;
+}
+
+QPushButton* SelectPage::getBStart() const
+{
+    return bStart;
+}
+
+QComboBox* SelectPage::getSelectTypeGame() const
+{
+    return selectTypeGame;
+}
+
+QComboBox* SelectPage::getSelectTypeAlgorithm() const
+{
+    return selectTypeAlgorithm;
+}
+
+QComboBox* SelectPage::getSelectTypeSize() const
+{
+    return selectTypeSize;
+}
+
+QPushButton* SelectPage::getBMainPage() const
+{
+    return bMainPage;
 }

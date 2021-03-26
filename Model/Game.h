@@ -95,6 +95,29 @@ public:
     void playGame();
 
     /**
+    * Funkcja służy do uruchomienia jednej parti gry w puzzle dla interfejsu graficznego
+    *
+    * @param moveNumberPuzzle - numer pola, którym gracz chce się poruszyć
+    *
+    * @return liczba dodatnia - numer pola, którym mamy sie poruszyć w interfejsie graficznym
+    *         -1 - wybrany numer pola jest błędny
+    */
+    int playGameGUI(int _moveNumberPuzzleInt);
+
+    /**
+    * Funkcja służy do wrócenia do poprzedniego ruchu dla automatycznego rozwiązania układanki dla interfejsu graficznego
+    *
+    * @return liczba dodatnia - numer pola, którym mamy sie poruszyć w interfejsie graficznym
+    *         -1 - wybrany numer pola jest błędny
+    */
+    int playGamePreviousGUI();
+
+    /**
+    * Funkcja służy do ustawienia gry do stanu pocztkowego
+    */
+    void resetGame();
+
+    /**
     * Funkcja służy do sprawdzenia czy podany ruch przez użytkownika z wybranym polem jest możliwy do wykonania
     *
     * @param numberPuzzleMove - obiekt pola, którym użytkownik chce się poruszyć

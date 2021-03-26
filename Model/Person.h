@@ -34,7 +34,7 @@ public:
     *
     * @return obiekt pola wybranego przez użytkownika, którym chce się poruszyć
     */
-    NumberPuzzle* move(vector<vector<NumberPuzzle>> gameSquareBoard);
+    NumberPuzzle* move(vector<vector<NumberPuzzle>> gameSquareBoard, int moveNumberPuzzle);
 
     /**
     * Funkcja słuzy do wypisania wszystkich atrybutów jakie przechowuje klasa

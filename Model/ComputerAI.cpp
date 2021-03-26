@@ -3,7 +3,6 @@
 #include "Model/NodeBoard.h"
 #include <queue>
 #include <algorithm>
-#include <thread>
 
 ComputerAI::ComputerAI(string _nameAlgorithm, SquareBoard _board )
 {
@@ -54,10 +53,10 @@ void ComputerAI::algorithmAStar(SquareBoard *board)
 
         map<string, NumberPuzzle> possibleNextNumberMove = map<string, NumberPuzzle>(possibleMove(current->getBoard()));
 
-        cout << "Start Board" << endl;
-        cout << "fScore = gScore + hScore -> " << current->getFScore() << " = " << current->getGScore() << " + " << current->getHScore() << endl;
-        current->getBoard()->printGameSquareBoard();
-        cout << "-------------------POSSIBLE MOVE--------------------"<<endl;
+//        cout << "Start Board" << endl;
+//        cout << "fScore = gScore + hScore -> " << current->getFScore() << " = " << current->getGScore() << " + " << current->getHScore() << endl;
+//        current->getBoard()->printGameSquareBoard();
+//        cout << "-------------------POSSIBLE MOVE--------------------"<<endl;
 
         for( map<string, NumberPuzzle>::iterator it = possibleNextNumberMove.begin(); it != possibleNextNumberMove.end(); it++ )
         {
@@ -67,9 +66,9 @@ void ComputerAI::algorithmAStar(SquareBoard *board)
              if( find(closeList.begin(), closeList.end(), boardNextPossibleMove) == end(closeList) )
              {
                  hScore = manhattanDistance(boardNextPossibleMove.getGameNumberPuzzle());
-                 cout << "Move: " << it->first << " Number: " << it->second.getNumber() << endl;
-                 cout << "fScore = gScore + hScore -> " << current->getGScore() + hScore + 1 << " = " << current->getGScore() + 1 << " + " << hScore << endl;
-                 boardNextPossibleMove.printGameSquareBoard();
+//                 cout << "Move: " << it->first << " Number: " << it->second.getNumber() << endl;
+//                 cout << "fScore = gScore + hScore -> " << current->getGScore() + hScore + 1 << " = " << current->getGScore() + 1 << " + " << hScore << endl;
+//                 boardNextPossibleMove.printGameSquareBoard();
                  current->addNext(it->first, &it->second, &boardNextPossibleMove, current->getGScore() + 1, hScore, current->getGScore() + hScore + 1);
 
                  openList.push(current->getNext(it->first));
@@ -81,11 +80,11 @@ void ComputerAI::algorithmAStar(SquareBoard *board)
                  }
              }
          }
-        cout << "---------------------END POSSIBLE MOVE--------------"<<endl;
+//        cout << "---------------------END POSSIBLE MOVE--------------"<<endl;
     }
-    cout << "END Board" << endl;
-    cout << "Move: " << current->getNameMove() <<  "Number: " << current->getMove()->getNumber() << endl;
-    current->getBoard()->printGameSquareBoard();
+//    cout << "END Board" << endl;
+//    cout << "Move: " << current->getNameMove() <<  "Number: " << current->getMove()->getNumber() << endl;
+//    current->getBoard()->printGameSquareBoard();
 
     while(current->getMove()->getNumber() != -1)
     {
@@ -111,9 +110,9 @@ void ComputerAI::algorithmIDAStar(SquareBoard *board)
     currentFScore = nextFScore;
     nextFScore = -1;
 
-    cout << "START: " << endl;
-    cout << "fScore = gScore + hScore -> " << root->getFScore()<< " = " << root->getGScore() << " + " << hScore << endl;
-    board->printGameSquareBoard();
+//    cout << "START: " << endl;
+//    cout << "fScore = gScore + hScore -> " << root->getFScore()<< " = " << root->getGScore() << " + " << hScore << endl;
+//    board->printGameSquareBoard();
 
     while(gameEnd == nullptr )
     {
@@ -121,9 +120,9 @@ void ComputerAI::algorithmIDAStar(SquareBoard *board)
         currentFScore = nextFScore;
         nextFScore = -1;
     }
-    cout << "END: " << endl;
-    cout << "fScore = gScore + hScore -> " << gameEnd->getFScore()<< " = " << gameEnd->getGScore() << " + " << gameEnd->getHScore() << endl;
-    gameEnd->getBoard()->printGameSquareBoard();
+//    cout << "END: " << endl;
+//    cout << "fScore = gScore + hScore -> " << gameEnd->getFScore()<< " = " << gameEnd->getGScore() << " + " << gameEnd->getHScore() << endl;
+//    gameEnd->getBoard()->printGameSquareBoard();
     while(gameEnd->getMove()->getNumber() != -1)
     {
         listMoveNumbers.push_front(*gameEnd->getMove());
@@ -138,7 +137,7 @@ NodeBoard* ComputerAI::iterativeDeepedingAStar(int *_currentFScore, int *_nextFS
 {
     if(node->getVisited() == false)
     {
-        cout<<"----------------------" <<endl;
+//        cout<<"----------------------" <<endl;
         map<string, NumberPuzzle> possibleNextNumberMove = map<string, NumberPuzzle>(possibleMove(node->getBoard()));
 
         for( map<string, NumberPuzzle>::iterator it = possibleNextNumberMove.begin(); it != possibleNextNumberMove.end(); it++ )
@@ -149,9 +148,9 @@ NodeBoard* ComputerAI::iterativeDeepedingAStar(int *_currentFScore, int *_nextFS
              if( find(_closeList->begin(), _closeList->end(), boardNextPossibleMove) == end(*_closeList) )
              {
                  int hScore = manhattanDistance(boardNextPossibleMove.getGameNumberPuzzle());
-                 cout << "Move: " << it->first << " Number: " << it->second.getNumber() << endl;
-                 cout << "fScore = gScore + hScore -> " << node->getGScore() + hScore + 1 << " = " << node->getGScore() + 1 << " + " << hScore << endl;
-                 boardNextPossibleMove.printGameSquareBoard();
+//                 cout << "Move: " << it->first << " Number: " << it->second.getNumber() << endl;
+//                 cout << "fScore = gScore + hScore -> " << node->getGScore() + hScore + 1 << " = " << node->getGScore() + 1 << " + " << hScore << endl;
+//                 boardNextPossibleMove.printGameSquareBoard();
 
                  node->addNext(it->first, &it->second, &boardNextPossibleMove, node->getGScore() + 1, hScore, node->getGScore() + hScore + 1);
                  _closeList->push_back(boardNextPossibleMove);
@@ -161,7 +160,7 @@ NodeBoard* ComputerAI::iterativeDeepedingAStar(int *_currentFScore, int *_nextFS
                  }
              }
          }
-        cout<<"-----------END---------" <<endl;
+//        cout<<"-----------END---------" <<endl;
         node->setVisited(true);
     }
 
@@ -290,13 +289,20 @@ void ComputerAI::setNameAlgorithm(string _nameAlgorithm, SquareBoard _board)
     }
 }
 
-NumberPuzzle* ComputerAI::move(vector<vector<NumberPuzzle>> gameSquareBoard)
+NumberPuzzle* ComputerAI::move(vector<vector<NumberPuzzle>> _gameSquareBoard, int _moveNumberPuzzle)
 {
     list<NumberPuzzle>::iterator prevIterator = iteratorMoveNumber;
-    cout << "Move number: " << prevIterator->getNumber() << endl;
+//    cout << "Move number: " << prevIterator->getNumber() << endl;
     iteratorMoveNumber++;
 
     return &*prevIterator;
+}
+
+NumberPuzzle* ComputerAI::movePrevious()
+{
+    iteratorMoveNumber--;
+    moves--;
+    return &*iteratorMoveNumber;
 }
 
 void ComputerAI::toString()

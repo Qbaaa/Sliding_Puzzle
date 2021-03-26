@@ -76,7 +76,7 @@ void Game::playGame()
         {
             bool correctMove;
             do{
-                moveNumberPuzzle = new NumberPuzzle(*player->move(squareBoard->getGameNumberPuzzle()));
+                moveNumberPuzzle = new NumberPuzzle(*player->move(squareBoard->getGameNumberPuzzle(), 0));
                 correctMove = checkCorrectMove(*moveNumberPuzzle);
                 if(!correctMove)
                     cout << "Przesuniecie puzzla z numerem "<< moveNumberPuzzle->getNumber() << " jest niemozliwe" << endl;
@@ -84,7 +84,7 @@ void Game::playGame()
         }
         else if(typeid(*player) == typeid(ComputerAI))
         {
-            moveNumberPuzzle = new NumberPuzzle(*player->move(squareBoard->getGameNumberPuzzle()));
+            moveNumberPuzzle = new NumberPuzzle(*player->move(squareBoard->getGameNumberPuzzle(), 0));
         }
 
         squareBoard->swapNumberPuzzleWithEmptyPuzzle(moveNumberPuzzle);
@@ -95,6 +95,66 @@ void Game::playGame()
     player->toString();
     squareBoard->printGameSquareBoard();
     cout << "KONIEC GRY" << endl;
+}
+
+int Game::playGameGUI(int _moveNumberPuzzleInt)
+{
+    NumberPuzzle *moveNumberPuzzle = nullptr;
+
+    if (typeid(*player) == typeid(Person))
+    {
+        moveNumberPuzzle = new NumberPuzzle(*player->move(squareBoard->getGameNumberPuzzle(), _moveNumberPuzzleInt));
+        bool correctMove = checkCorrectMove(*moveNumberPuzzle);
+        if(!correctMove)
+        {
+//            cout << "Przesuniecie puzzla z numerem "<< moveNumberPuzzle->getNumber() << " jest niemozliwe" << endl;
+            return -1;
+        }
+        else
+        {
+            squareBoard->swapNumberPuzzleWithEmptyPuzzle(moveNumberPuzzle);
+            player->increaseOneMoves();
+        }
+    }
+    else if(typeid(*player) == typeid(ComputerAI))
+    {
+        moveNumberPuzzle = new NumberPuzzle(*player->move(squareBoard->getGameNumberPuzzle(), _moveNumberPuzzleInt));
+        squareBoard->swapNumberPuzzleWithEmptyPuzzle(moveNumberPuzzle);
+        _moveNumberPuzzleInt = moveNumberPuzzle->getNumber();
+        player->increaseOneMoves();
+    }
+//    squareBoard->printGameSquareBoard();
+    return _moveNumberPuzzleInt;
+}
+
+int Game::playGamePreviousGUI()
+{
+    ComputerAI *computerAI;
+    computerAI = dynamic_cast < ComputerAI*>( player );
+
+    if( computerAI )
+    {
+        int numberPrevious = computerAI->movePrevious()->getNumber();
+        NumberPuzzle *moveNumberPuzzle = nullptr;
+        for(int i=0; i < squareBoard->getSize(); i++)
+            for(int j=0; j < squareBoard->getSize(); j++)
+                if(squareBoard->getGameNumberPuzzle()[i][j].getNumber() == numberPrevious)
+                {
+                    moveNumberPuzzle = new NumberPuzzle(numberPrevious, squareBoard->getGameNumberPuzzle()[i][j].getPoint() );
+                    squareBoard->swapNumberPuzzleWithEmptyPuzzle(moveNumberPuzzle);
+                    return numberPrevious;
+                }
+    }
+    return -1;
+}
+
+void Game::resetGame()
+{
+    vector<int> startGame = squareBoard->getStartNumberPuzzle();
+    player->setMoves(0);
+
+    delete squareBoard;
+    squareBoard = new SquareBoard(startGame, startGame);
 }
 
 bool Game::checkCorrectMove(NumberPuzzle numberPuzzleMove)

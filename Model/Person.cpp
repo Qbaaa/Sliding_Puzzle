@@ -11,17 +11,17 @@ Person::Person(int _moves): Player(_moves) {}
 
 Person::~Person() {}
 
-NumberPuzzle* Person::move(vector<vector<NumberPuzzle>> gameSquareBoard)
+NumberPuzzle* Person::move(vector<vector<NumberPuzzle>> gameSquareBoard, int moveNumberPuzzle)
 {
-    int selectNumber;
-    cout << "Ktory numer puzzla chcesz przesunac <1, " << (gameSquareBoard.size() * gameSquareBoard.size()) -1 << ">: ";
-    while (!(cin >> selectNumber) || selectNumber < 1 || selectNumber > ((int)gameSquareBoard.size() * (int)gameSquareBoard.size())-1 || getchar() != '\n')
-    {
-        cout << "BLAD! Podaj jeszcze raz: ";
-        while (getchar() != '\n');
-        cin.clear();
-        cin.sync();
-    }
+    int selectNumber = moveNumberPuzzle;
+//    cout << "Ktory numer puzzla chcesz przesunac <1, " << (gameSquareBoard.size() * gameSquareBoard.size()) -1 << ">: ";
+//    while (!(cin >> selectNumber) || selectNumber < 1 || selectNumber > ((int)gameSquareBoard.size() * (int)gameSquareBoard.size())-1 || getchar() != '\n')
+//    {
+//        cout << "BLAD! Podaj jeszcze raz: ";
+//        while (getchar() != '\n');
+//        cin.clear();
+//        cin.sync();
+//    }
 
     NumberPuzzle *returnNumberPuzzle = NULL;
     for(unsigned int i=0; i < gameSquareBoard.size(); i++)
